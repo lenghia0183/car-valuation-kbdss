@@ -1,0 +1,723 @@
+{
+  "_meta": {
+    "description": "Khung tri thức hãng - dòng xe - phiên bản cho thị trường xe ô tô cũ Việt Nam",
+    "price_unit": "trieu VND",
+    "note": "Giá xe mới tham chiếu (new_price) là giá niêm yết mô phỏng theo mặt bằng thị trường Việt Nam, dùng làm giá gốc cho công thức khấu hao."
+  },
+  "segments": {
+    "hatchback_a": {
+      "label": "Hatchback hạng A",
+      "base_depreciation": 0.115,
+      "liquidity": 0.75
+    },
+    "sedan_b": {
+      "label": "Sedan hạng B",
+      "base_depreciation": 0.095,
+      "liquidity": 0.95
+    },
+    "sedan_c": {
+      "label": "Sedan hạng C",
+      "base_depreciation": 0.105,
+      "liquidity": 0.85
+    },
+    "sedan_d": {
+      "label": "Sedan hạng D",
+      "base_depreciation": 0.125,
+      "liquidity": 0.65
+    },
+    "suv_b": {
+      "label": "SUV/Crossover hạng B",
+      "base_depreciation": 0.09,
+      "liquidity": 1.0
+    },
+    "suv_c": {
+      "label": "SUV/Crossover hạng C",
+      "base_depreciation": 0.1,
+      "liquidity": 0.9
+    },
+    "suv_d": {
+      "label": "SUV hạng D",
+      "base_depreciation": 0.12,
+      "liquidity": 0.7
+    },
+    "mpv": {
+      "label": "MPV đa dụng",
+      "base_depreciation": 0.1,
+      "liquidity": 0.85
+    },
+    "pickup": {
+      "label": "Bán tải",
+      "base_depreciation": 0.095,
+      "liquidity": 0.8
+    },
+    "luxury": {
+      "label": "Xe sang",
+      "base_depreciation": 0.15,
+      "liquidity": 0.45
+    }
+  },
+  "brands": {
+    "Toyota": {
+      "origin_default": "lap_rap",
+      "brand_factor": 1.06,
+      "reliability": "cao"
+    },
+    "Honda": {
+      "origin_default": "lap_rap",
+      "brand_factor": 1.03,
+      "reliability": "cao"
+    },
+    "Mazda": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.99,
+      "reliability": "kha"
+    },
+    "Hyundai": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.98,
+      "reliability": "kha"
+    },
+    "Kia": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.97,
+      "reliability": "kha"
+    },
+    "Ford": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.97,
+      "reliability": "kha"
+    },
+    "Mitsubishi": {
+      "origin_default": "nhap_khau",
+      "brand_factor": 0.97,
+      "reliability": "kha"
+    },
+    "VinFast": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.9,
+      "reliability": "trung_binh"
+    },
+    "Nissan": {
+      "origin_default": "nhap_khau",
+      "brand_factor": 0.95,
+      "reliability": "kha"
+    },
+    "Suzuki": {
+      "origin_default": "nhap_khau",
+      "brand_factor": 0.93,
+      "reliability": "trung_binh"
+    },
+    "Mercedes-Benz": {
+      "origin_default": "lap_rap",
+      "brand_factor": 0.93,
+      "reliability": "trung_binh"
+    },
+    "BMW": {
+      "origin_default": "nhap_khau",
+      "brand_factor": 0.9,
+      "reliability": "trung_binh"
+    }
+  },
+  "models": [
+    {
+      "brand": "Toyota",
+      "model": "Vios",
+      "segment": "sedan_b",
+      "versions": [
+        {
+          "version": "1.5E MT",
+          "new_price": 478,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5E CVT",
+          "new_price": 528,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5G CVT",
+          "new_price": 592,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Toyota",
+      "model": "Camry",
+      "segment": "sedan_d",
+      "versions": [
+        {
+          "version": "2.0Q",
+          "new_price": 1105,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.5Q",
+          "new_price": 1495,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Toyota",
+      "model": "Innova",
+      "segment": "mpv",
+      "versions": [
+        {
+          "version": "2.0E MT",
+          "new_price": 760,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.0G AT",
+          "new_price": 878,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.0V AT",
+          "new_price": 995,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Toyota",
+      "model": "Fortuner",
+      "segment": "suv_d",
+      "versions": [
+        {
+          "version": "2.4G MT",
+          "new_price": 1055,
+          "transmission": "MT",
+          "fuel": "dau"
+        },
+        {
+          "version": "2.4G AT",
+          "new_price": 1170,
+          "transmission": "AT",
+          "fuel": "dau"
+        },
+        {
+          "version": "2.8V AT",
+          "new_price": 1434,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Toyota",
+      "model": "Corolla Cross",
+      "segment": "suv_c",
+      "versions": [
+        {
+          "version": "1.8G",
+          "new_price": 820,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.8HEV",
+          "new_price": 955,
+          "transmission": "CVT",
+          "fuel": "hybrid"
+        }
+      ]
+    },
+    {
+      "brand": "Honda",
+      "model": "City",
+      "segment": "sedan_b",
+      "versions": [
+        {
+          "version": "1.5G",
+          "new_price": 559,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5RS",
+          "new_price": 618,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Honda",
+      "model": "CR-V",
+      "segment": "suv_c",
+      "versions": [
+        {
+          "version": "1.5E",
+          "new_price": 1029,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5L",
+          "new_price": 1118,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5G",
+          "new_price": 1259,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Honda",
+      "model": "Civic",
+      "segment": "sedan_c",
+      "versions": [
+        {
+          "version": "1.5G",
+          "new_price": 730,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5RS",
+          "new_price": 870,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Mazda",
+      "model": "Mazda3",
+      "segment": "sedan_c",
+      "versions": [
+        {
+          "version": "1.5 Deluxe",
+          "new_price": 669,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 Luxury",
+          "new_price": 739,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.0 Signature",
+          "new_price": 849,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-5",
+      "segment": "suv_c",
+      "versions": [
+        {
+          "version": "2.0 Deluxe",
+          "new_price": 759,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.0 Luxury",
+          "new_price": 829,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.5 Signature",
+          "new_price": 979,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-3",
+      "segment": "suv_b",
+      "versions": [
+        {
+          "version": "1.5 Deluxe",
+          "new_price": 524,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 Premium",
+          "new_price": 596,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Accent",
+      "segment": "sedan_b",
+      "versions": [
+        {
+          "version": "1.5 MT",
+          "new_price": 439,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 AT",
+          "new_price": 499,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 AT dac biet",
+          "new_price": 569,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Tucson",
+      "segment": "suv_c",
+      "versions": [
+        {
+          "version": "2.0 Tieu chuan",
+          "new_price": 769,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.0 Dac biet",
+          "new_price": 879,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Hyundai",
+      "model": "SantaFe",
+      "segment": "suv_d",
+      "versions": [
+        {
+          "version": "2.5 Xang tieu chuan",
+          "new_price": 1069,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.2 Dau cao cap",
+          "new_price": 1345,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Grand i10",
+      "segment": "hatchback_a",
+      "versions": [
+        {
+          "version": "1.2 MT",
+          "new_price": 375,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.2 AT",
+          "new_price": 425,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Kia",
+      "model": "Morning",
+      "segment": "hatchback_a",
+      "versions": [
+        {
+          "version": "MT",
+          "new_price": 349,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "AT",
+          "new_price": 419,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Kia",
+      "model": "Seltos",
+      "segment": "suv_b",
+      "versions": [
+        {
+          "version": "1.4 Deluxe",
+          "new_price": 599,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.4 Premium",
+          "new_price": 689,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Kia",
+      "model": "Carnival",
+      "segment": "mpv",
+      "versions": [
+        {
+          "version": "2.2D Luxury",
+          "new_price": 1299,
+          "transmission": "AT",
+          "fuel": "dau"
+        },
+        {
+          "version": "2.2D Signature",
+          "new_price": 1589,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Ford",
+      "model": "Ranger",
+      "segment": "pickup",
+      "versions": [
+        {
+          "version": "XLS 2.0 MT",
+          "new_price": 679,
+          "transmission": "MT",
+          "fuel": "dau"
+        },
+        {
+          "version": "XLS 2.0 AT",
+          "new_price": 729,
+          "transmission": "AT",
+          "fuel": "dau"
+        },
+        {
+          "version": "Wildtrak 2.0",
+          "new_price": 979,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Ford",
+      "model": "Everest",
+      "segment": "suv_d",
+      "versions": [
+        {
+          "version": "Ambiente 2.0",
+          "new_price": 1099,
+          "transmission": "AT",
+          "fuel": "dau"
+        },
+        {
+          "version": "Titanium 2.0",
+          "new_price": 1452,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Xpander",
+      "segment": "mpv",
+      "versions": [
+        {
+          "version": "1.5 MT",
+          "new_price": 560,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 AT",
+          "new_price": 648,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Outlander",
+      "segment": "suv_c",
+      "versions": [
+        {
+          "version": "2.0 CVT",
+          "new_price": 825,
+          "transmission": "CVT",
+          "fuel": "xang"
+        },
+        {
+          "version": "2.4 CVT",
+          "new_price": 950,
+          "transmission": "CVT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "VinFast",
+      "model": "Fadil",
+      "segment": "hatchback_a",
+      "versions": [
+        {
+          "version": "Tieu chuan",
+          "new_price": 382,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "Nang cao",
+          "new_price": 429,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "VinFast",
+      "model": "Lux A2.0",
+      "segment": "sedan_d",
+      "versions": [
+        {
+          "version": "Tieu chuan",
+          "new_price": 1012,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "Cao cap",
+          "new_price": 1199,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Nissan",
+      "model": "Navara",
+      "segment": "pickup",
+      "versions": [
+        {
+          "version": "EL 2.5",
+          "new_price": 679,
+          "transmission": "AT",
+          "fuel": "dau"
+        },
+        {
+          "version": "VL 2.5",
+          "new_price": 835,
+          "transmission": "AT",
+          "fuel": "dau"
+        }
+      ]
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Ertiga",
+      "segment": "mpv",
+      "versions": [
+        {
+          "version": "1.5 MT",
+          "new_price": 499,
+          "transmission": "MT",
+          "fuel": "xang"
+        },
+        {
+          "version": "1.5 AT",
+          "new_price": 559,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "C-Class",
+      "segment": "luxury",
+      "versions": [
+        {
+          "version": "C200",
+          "new_price": 1709,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "C300 AMG",
+          "new_price": 2099,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    },
+    {
+      "brand": "BMW",
+      "model": "Series 3",
+      "segment": "luxury",
+      "versions": [
+        {
+          "version": "320i",
+          "new_price": 1799,
+          "transmission": "AT",
+          "fuel": "xang"
+        },
+        {
+          "version": "330i M Sport",
+          "new_price": 2329,
+          "transmission": "AT",
+          "fuel": "xang"
+        }
+      ]
+    }
+  ],
+  "regions": {
+    "Hà Nội": {
+      "factor": 1.0
+    },
+    "TP Hồ Chí Minh": {
+      "factor": 1.01
+    },
+    "Đà Nẵng": {
+      "factor": 0.98
+    },
+    "Hải Phòng": {
+      "factor": 0.975
+    },
+    "Cần Thơ": {
+      "factor": 0.97
+    },
+    "Tỉnh khác": {
+      "factor": 0.955
+    }
+  }
+}

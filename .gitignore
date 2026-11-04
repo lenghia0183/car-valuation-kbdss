@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Kết quả kết xuất tạm khi kiểm tra bố cục báo cáo
+outputs/page_renders/
+
+# Hệ điều hành
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Tệp tạm của Microsoft Word
+~$*.docx
+~$*.doc

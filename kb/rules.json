@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "description": "Tập luật sản xuất định giá xe ô tô cũ. Mỗi luật có dạng IF <điều kiện> THEN <hành động>.",
+    "action_types": {
+      "set": "gán giá trị cho một sự kiện trong bộ nhớ làm việc",
+      "multiply": "nhân hệ số điều chỉnh vào giá (factor)",
+      "flag": "đánh dấu cảnh báo rủi ro",
+      "confidence": "điều chỉnh độ tin cậy"
+    },
+    "groups": {
+      "R01-R05": "Khấu hao theo tuổi xe",
+      "R06-R10": "Điều chỉnh theo số km đã đi",
+      "R11-R14": "Điều chỉnh theo tình trạng và lịch sử",
+      "R15-R18": "Điều chỉnh theo cấu hình kỹ thuật",
+      "R19-R21": "Điều chỉnh theo thị trường và khu vực",
+      "R22-R25": "Cảnh báo rủi ro và độ tin cậy"
+    }
+  },
+  "rules": [
+    {"id": "R01", "group": "khau_hao", "priority": 100,
+     "description": "Xe dưới 1 năm tuổi gần như còn mới, chỉ mất giá do mất 'biển số mới'",
+     "if": [{"fact": "tuoi_xe", "op": "<", "value": 1}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.90, "label": "Khấu hao năm đầu"}]},
+
+    {"id": "R02", "group": "khau_hao", "priority": 100,
+     "description": "Xe 1-3 năm tuổi: khấu hao nhanh theo hệ số cơ bản của phân khúc",
+     "if": [{"fact": "tuoi_xe", "op": ">=", "value": 1}, {"fact": "tuoi_xe", "op": "<", "value": 3}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "0.90 * pow(1 - base_depreciation, tuoi_xe)", "label": "Khấu hao 1-3 năm"}]},
+
+    {"id": "R03", "group": "khau_hao", "priority": 100,
+     "description": "Xe 3-7 năm tuổi: tốc độ khấu hao chậm lại còn 85% mức cơ bản",
+     "if": [{"fact": "tuoi_xe", "op": ">=", "value": 3}, {"fact": "tuoi_xe", "op": "<", "value": 7}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "0.90 * pow(1 - base_depreciation, 3) * pow(1 - base_depreciation * 0.85, tuoi_xe - 3)", "label": "Khấu hao 3-7 năm"}]},
+
+    {"id": "R04", "group": "khau_hao", "priority": 100,
+     "description": "Xe 7-15 năm tuổi: khấu hao chậm, chỉ còn 65% mức cơ bản",
+     "if": [{"fact": "tuoi_xe", "op": ">=", "value": 7}, {"fact": "tuoi_xe", "op": "<", "value": 15}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "0.90 * pow(1 - base_depreciation, 3) * pow(1 - base_depreciation * 0.85, 4) * pow(1 - base_depreciation * 0.65, tuoi_xe - 7)", "label": "Khấu hao 7-15 năm"}]},
+
+    {"id": "R05", "group": "khau_hao", "priority": 100,
+     "description": "Xe trên 15 năm: giá tiệm cận giá trị sử dụng, có sàn giá tối thiểu",
+     "if": [{"fact": "tuoi_xe", "op": ">=", "value": 15}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "max(0.08, 0.90 * pow(1 - base_depreciation, 3) * pow(1 - base_depreciation * 0.85, 4) * pow(1 - base_depreciation * 0.65, 8) * pow(0.96, tuoi_xe - 15))", "label": "Khấu hao trên 15 năm"}]},
+
+    {"id": "R06", "group": "so_km", "priority": 90,
+     "description": "Số km rất thấp so với tuổi xe (dưới 8.000 km/năm): xe giữ giá hơn",
+     "if": [{"fact": "km_moi_nam", "op": "<", "value": 8000}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.05, "label": "Km thấp hơn trung bình"}]},
+
+    {"id": "R07", "group": "so_km", "priority": 90,
+     "description": "Số km bình thường (8.000-15.000 km/năm): không điều chỉnh",
+     "if": [{"fact": "km_moi_nam", "op": ">=", "value": 8000}, {"fact": "km_moi_nam", "op": "<=", "value": 15000}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.00, "label": "Km ở mức trung bình"}]},
+
+    {"id": "R08", "group": "so_km", "priority": 90,
+     "description": "Số km cao (15.000-25.000 km/năm): giảm giá",
+     "if": [{"fact": "km_moi_nam", "op": ">", "value": 15000}, {"fact": "km_moi_nam", "op": "<=", "value": 25000}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.94, "label": "Km cao hơn trung bình"}]},
+
+    {"id": "R09", "group": "so_km", "priority": 90,
+     "description": "Số km rất cao (trên 25.000 km/năm): giảm giá mạnh, nghi ngờ xe chạy dịch vụ",
+     "if": [{"fact": "km_moi_nam", "op": ">", "value": 25000}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.87, "label": "Km rất cao, nghi xe dịch vụ"},
+              {"type": "flag", "value": "Số km mỗi năm rất cao, cần kiểm tra lịch sử sử dụng (có thể là xe chạy dịch vụ)"}]},
+
+    {"id": "R10", "group": "so_km", "priority": 89,
+     "description": "Tổng số km vượt 200.000 km: động cơ và hộp số đã đến chu kỳ đại tu",
+     "if": [{"fact": "so_km", "op": ">", "value": 200000}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.92, "label": "Tổng km vượt 200.000"},
+              {"type": "flag", "value": "Tổng số km vượt 200.000 km, cần kiểm tra tình trạng động cơ và hộp số"}]},
+
+    {"id": "R11", "group": "tinh_trang", "priority": 80,
+     "description": "Xe từng ngập nước: rủi ro hệ thống điện, giảm giá rất mạnh",
+     "if": [{"fact": "ngap_nuoc", "op": "==", "value": true}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.70, "label": "Xe từng ngập nước"},
+              {"type": "flag", "value": "Xe từng ngập nước: rủi ro hỏng hệ thống điện, nên kiểm tra kỹ trước khi mua"},
+              {"type": "confidence", "delta": -0.10}]},
+
+    {"id": "R12", "group": "tinh_trang", "priority": 80,
+     "description": "Xe từng tai nạn nặng (ảnh hưởng khung gầm): giảm giá mạnh",
+     "if": [{"fact": "tai_nan_nang", "op": "==", "value": true}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.78, "label": "Xe từng tai nạn nặng"},
+              {"type": "flag", "value": "Xe từng tai nạn nặng: cần kiểm tra khung gầm và độ chính xác của thước lái"},
+              {"type": "confidence", "delta": -0.08}]},
+
+    {"id": "R13", "group": "tinh_trang", "priority": 79,
+     "description": "Xe đăng ký kinh doanh vận tải (biển vàng hoặc từng chạy dịch vụ)",
+     "if": [{"fact": "xe_dich_vu", "op": "==", "value": true}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.88, "label": "Xe từng đăng ký kinh doanh"},
+              {"type": "flag", "value": "Xe từng đăng ký kinh doanh vận tải: thanh khoản thấp hơn xe gia đình"}]},
+
+    {"id": "R14", "group": "tinh_trang", "priority": 78,
+     "description": "Xe một chủ từ đầu, có đầy đủ lịch sử bảo dưỡng hãng: cộng giá",
+     "if": [{"fact": "mot_chu_bao_duong_hang", "op": "==", "value": true}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.04, "label": "Một chủ, bảo dưỡng hãng đầy đủ"},
+              {"type": "confidence", "delta": 0.05}]},
+
+    {"id": "R15", "group": "ky_thuat", "priority": 70,
+     "description": "Hộp số tự động được ưa chuộng hơn hộp số sàn trên thị trường xe cũ",
+     "if": [{"fact": "hop_so", "op": "in", "value": ["AT", "CVT"]}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.02, "label": "Hộp số tự động"}]},
+
+    {"id": "R16", "group": "ky_thuat", "priority": 70,
+     "description": "Hộp số sàn kém thanh khoản hơn ở phân khúc xe gia đình",
+     "if": [{"fact": "hop_so", "op": "==", "value": "MT"},
+            {"fact": "phan_khuc", "op": "not_in", "value": ["pickup"]}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.96, "label": "Hộp số sàn"}]},
+
+    {"id": "R17", "group": "ky_thuat", "priority": 69,
+     "description": "Xe máy dầu ở phân khúc SUV/bán tải giữ giá tốt hơn",
+     "if": [{"fact": "nhien_lieu", "op": "==", "value": "dau"},
+            {"fact": "phan_khuc", "op": "in", "value": ["suv_d", "pickup", "mpv"]}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.03, "label": "Máy dầu phân khúc SUV/bán tải"}]},
+
+    {"id": "R18", "group": "ky_thuat", "priority": 69,
+     "description": "Xe nhập khẩu nguyên chiếc được đánh giá cao hơn xe lắp ráp cùng đời",
+     "if": [{"fact": "xuat_xu", "op": "==", "value": "nhap_khau"}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 1.03, "label": "Nhập khẩu nguyên chiếc"}]},
+
+    {"id": "R19", "group": "thi_truong", "priority": 60,
+     "description": "Điều chỉnh theo hệ số thương hiệu (mức độ giữ giá của hãng)",
+     "if": [{"fact": "brand_factor", "op": "exists"}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "brand_factor", "label": "Hệ số thương hiệu"}]},
+
+    {"id": "R20", "group": "thi_truong", "priority": 60,
+     "description": "Điều chỉnh theo mặt bằng giá của khu vực rao bán",
+     "if": [{"fact": "region_factor", "op": "exists"}],
+     "then": [{"type": "multiply", "target": "gia", "expr": "region_factor", "label": "Hệ số khu vực"}]},
+
+    {"id": "R21", "group": "thi_truong", "priority": 59,
+     "description": "Phân khúc thanh khoản thấp (xe sang, sedan hạng D cũ) khó bán, giảm giá",
+     "if": [{"fact": "liquidity", "op": "<", "value": 0.7}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.96, "label": "Phân khúc thanh khoản thấp"},
+              {"type": "flag", "value": "Phân khúc thanh khoản thấp, thời gian bán trung bình dài hơn"}]},
+
+    {"id": "R22", "group": "rui_ro", "priority": 50,
+     "description": "Xe sang trên 8 năm: chi phí bảo dưỡng rất cao, giảm giá thêm",
+     "if": [{"fact": "phan_khuc", "op": "==", "value": "luxury"},
+            {"fact": "tuoi_xe", "op": ">", "value": 8}],
+     "then": [{"type": "multiply", "target": "gia", "factor": 0.90, "label": "Xe sang quá 8 năm"},
+              {"type": "flag", "value": "Xe sang đời sâu, chi phí bảo dưỡng và phụ tùng cao"}]},
+
+    {"id": "R23", "group": "rui_ro", "priority": 50,
+     "description": "Có quá ít tình huống tương tự trong cơ sở tình huống: hạ độ tin cậy",
+     "if": [{"fact": "so_tinh_huong_tuong_tu", "op": "<", "value": 3}],
+     "then": [{"type": "confidence", "delta": -0.15},
+              {"type": "flag", "value": "Ít dữ liệu tham chiếu cho dòng xe này, khoảng giá đề xuất có độ không chắc chắn cao"}]},
+
+    {"id": "R24", "group": "rui_ro", "priority": 50,
+     "description": "Các tình huống tương tự có độ phân tán giá lớn: hạ độ tin cậy",
+     "if": [{"fact": "he_so_bien_thien", "op": ">", "value": 0.25}],
+     "then": [{"type": "confidence", "delta": -0.10},
+              {"type": "flag", "value": "Giá các xe tương tự phân tán mạnh, nên tham khảo thêm nhiều tin rao"}]},
+
+    {"id": "R25", "group": "rui_ro", "priority": 49,
+     "description": "Kết quả từ luật và từ tình huống lệch quá 20%: cảnh báo mâu thuẫn tri thức",
+     "if": [{"fact": "do_lech_luat_cbr", "op": ">", "value": 0.20}],
+     "then": [{"type": "confidence", "delta": -0.12},
+              {"type": "flag", "value": "Kết quả suy diễn từ luật và từ tình huống tương tự lệch đáng kể, cần kiểm tra lại thông tin xe"}]}
+  ]
+}

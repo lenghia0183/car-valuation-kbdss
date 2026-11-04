@@ -1,0 +1,126 @@
+{
+  "so_xe_kiem_thu": 584,
+  "so_xe_co_tinh_huong_tuong_tu": 584,
+  "ty_le_co_tinh_huong_tuong_tu": 1.0,
+  "ket_qua_cac_phuong_phap": {
+    "Chi dung luat": {
+      "MAE": 43.79,
+      "MAPE": 11.43,
+      "R2": 0.9055
+    },
+    "Chi dung CBR": {
+      "MAE": 45.43,
+      "MAPE": 12.3,
+      "R2": 0.893
+    },
+    "Chi dung Random Forest": {
+      "MAE": 45.39,
+      "MAPE": 11.92,
+      "R2": 0.8931
+    },
+    "He lai (luat + CBR)": {
+      "MAE": 40.86,
+      "MAPE": 10.93,
+      "R2": 0.9153
+    }
+  },
+  "ty_le_gia_thuc_trong_khoang_de_xuat": 0.8185,
+  "do_tin_cay_trung_binh": 0.8717,
+  "do_rong_khoang_gia_trung_binh": 0.3629,
+  "thoi_gian_he_lai_ms_moi_xe": 8.57,
+  "thoi_gian_random_forest_ms_moi_xe": 0.1057,
+  "sai_so_theo_phan_khuc": {
+    "sedan_b": {
+      "so_xe": 102,
+      "MAE": 29.75,
+      "MAPE": 11.42,
+      "ty_le_trong_khoang": 0.79
+    },
+    "suv_c": {
+      "so_xe": 99,
+      "MAE": 55.68,
+      "MAPE": 10.34,
+      "ty_le_trong_khoang": 0.79
+    },
+    "hatchback_a": {
+      "so_xe": 93,
+      "MAE": 18.62,
+      "MAPE": 10.32,
+      "ty_le_trong_khoang": 0.85
+    },
+    "mpv": {
+      "so_xe": 82,
+      "MAE": 42.46,
+      "MAPE": 12.19,
+      "ty_le_trong_khoang": 0.8
+    },
+    "pickup": {
+      "so_xe": 46,
+      "MAE": 51.37,
+      "MAPE": 10.93,
+      "ty_le_trong_khoang": 0.78
+    },
+    "sedan_c": {
+      "so_xe": 42,
+      "MAE": 39.91,
+      "MAPE": 12.07,
+      "ty_le_trong_khoang": 0.86
+    },
+    "suv_b": {
+      "so_xe": 41,
+      "MAE": 30.97,
+      "MAPE": 9.57,
+      "ty_le_trong_khoang": 0.85
+    },
+    "suv_d": {
+      "so_xe": 40,
+      "MAE": 63.87,
+      "MAPE": 10.67,
+      "ty_le_trong_khoang": 0.85
+    },
+    "sedan_d": {
+      "so_xe": 27,
+      "MAE": 48.89,
+      "MAPE": 9.84,
+      "ty_le_trong_khoang": 0.81
+    },
+    "luxury": {
+      "so_xe": 12,
+      "MAE": 76.51,
+      "MAPE": 11.41,
+      "ty_le_trong_khoang": 0.92
+    }
+  },
+  "sai_so_theo_nhom_tuoi": {
+    "0-2 nam": {
+      "so_xe": 101,
+      "MAE": 59.45,
+      "MAPE": 11.38,
+      "ty_le_trong_khoang": 0.83
+    },
+    "3-5 nam": {
+      "so_xe": 248,
+      "MAE": 41.78,
+      "MAPE": 10.28,
+      "ty_le_trong_khoang": 0.81
+    },
+    "6-8 nam": {
+      "so_xe": 149,
+      "MAE": 36.77,
+      "MAPE": 11.45,
+      "ty_le_trong_khoang": 0.83
+    },
+    "9-12 nam": {
+      "so_xe": 57,
+      "MAE": 27.4,
+      "MAPE": 12.54,
+      "ty_le_trong_khoang": 0.79
+    },
+    "tren 12 nam": {
+      "so_xe": 29,
+      "MAE": 15.78,
+      "MAPE": 9.01,
+      "ty_le_trong_khoang": 0.9
+    }
+  }
+}
